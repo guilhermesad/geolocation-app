@@ -1,0 +1,76 @@
+<div class="row">
+
+  <!-- Left box -->
+  <div class="col-md-6">
+    <div class="box clearfix">
+      <div class="info">
+        <h2>Estimated location</h2>
+        <div class="table-responsive">
+          <table class="table table-condensed table-hover">
+            <thead>
+              <tr>
+                <th class="col-sm-4">Property</th>
+                <th class="col-sm-5">Value</th>
+                <th class="col-sm-3"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="field in fields">
+                <td class="text-left">
+                  {{field.displayName}}
+                </td>
+                <td class="text-danger">
+                  {{myLocation[field.name]}}
+                </td>
+                <td class="text-center">
+                  <button ng-click="help(field.displayName)" class="btn btn-warning btn-xs" ng-class="{invisible: myLocation.query == '0.0.0.0'}">
+                    ?
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <menu class="col-xs-12 text-right">
+          <button ng-click="resetMyLocation()" class="btn btn-link">
+            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            Reset location
+          </button>
+          <button ng-click="getMyLocation()" class="btn btn-primary">
+            <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+            My location
+          </button>
+        </menu>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right box -->
+  <div class="col-md-6">
+    <div class="box">
+      <div class="info">
+        <h2>Website domain</h2>
+        <form name="websiteForm" ng-submit="websiteForm.$valid && locateWebsite()" novalidate>
+          <div class="form-group">
+            <div class="input-group">
+              <label for="host-input" class="sr-only">Website domain</label>
+              <input type="text" class="form-control" placeholder="Ex: www.mysite.com, mysite.com..." id="host-input" ng-model="website.host" ng-pattern="hostRegex">
+              <span class="input-group-btn">
+                <button type="submit" class="btn btn-success">
+                  Locate
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                </button>
+              </span>
+            </div>
+          </div>
+        </form>
+        <div class="well well-sm">
+          <ui-gmap-google-map center="map.center" zoom="map.zoom">
+            <ui-gmap-marker coords="website.coords" options="website.options" idkey="1"></ui-gmap-marker>
+            <ui-gmap-marker coords="myLocation.coords" options="myLocation.options" idkey="2"></ui-gmap-marker>
+          </ui-gmap-google-map>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
